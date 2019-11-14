@@ -1,0 +1,91 @@
+問1
+
+class Library
+{
++ HWND m_hWnd;
++ D3DManager*    m_pD3DManager;
++ DSoundManager* m_pDSoundManager;
++ XInput*	 m_pXInput;
++ Texture*	 m_pTexture;
++ Vertex*	 m_pVertex;
++ UVSetter*	 m_pUVSetter;
++ Library(HWND hWnd);
++ ~Library();
+}
+
+class SceneManager
+{
++ Scene*  m_pScene;		
++ SceneManager(Library* pLibrary);
++ ~SceneManager();
++ bool Control();
++ void Draw();
+}
+
+class Scene
+{
++ bool	m_PadState[PAD_MAX];
++ bool	m_PadOldState[PAD_MAX];
++ Scene();
++ virtual ~Scene();
++ virtual SCENE_NUM Control() = 0;
++ virtual void Draw() = 0;
++ virtual void PadCheck() = 0;
+}
+
+class TitleScene
+{
++ TitleScene(Library* pLibrary);
++ ~TitleScene();
++virtual SCENE_NUM Control();
++virtual void Draw();
++virtual void PadCheck();
+}
+
+class TitleSelectManager
+{	
++ TitleSelectManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture, bool* pPadState, + bool* pPadOldState);
++ ~TitleSelectManager();
++ TITLESELECT_ID Control();
++ void Draw();
+}
+
+class TitleBackGround
+{
++ TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++ ~TitleBackGround();
++ void Control();
++ void Draw();
+}
+
+class TitleName
+{
++ TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++ ~TitleName();
++ void Control();
++ void Draw();
+}
+
+class TitleTimeManager
+{
++ TitleTimeManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++ ~TitleTimeManager();
++ bool Control();
++ void Draw();
+}
+
+TitleBackGround--* TitleScene
+TitleName--* TitleScene
+TitleSelectManager--* TitleScene
+TitleTimeManager--* TitleScene
+
+TitleScene --|> Scene
+
+Scene --o SceneManager
+
+Library --o TitleSelectManager
+Library --o TitleScene
+Library --o TitleName
+Library --o TitleBackGround
+Library --o TitleTimeManager
+Library --o SceneManager

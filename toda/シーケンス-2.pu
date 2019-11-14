@@ -1,0 +1,31 @@
+@startuml
+participant TitleScene
+participant Library
+participant TitleBackGround
+participant TitleSelectManager
+participant TitleTimeManager
+participant TitleName
+
+activate Library
+activate TitleScene
+activate TitleBackGround
+activate TitleSelectManager
+activate TitleTimeManager
+activate TitleName
+
+
+
+
+TitleScene -> Library : コントローラーの情報を取得
+
+alt 
+TitleScene -> TitleTimeManager
+TitleTimeManager -> TitleScene : NextScene に LOGOを代入
+end
+
+
+
+deactivate TitleScene
+
+deactivate Library
+@enduml

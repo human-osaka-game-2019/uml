@@ -1,0 +1,75 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant TitleBackGround
+participant TitleSelectManager
+participant TitleTimeManager
+participant TitleName
+
+/' ------------------ loop ------------------------------- '/
+loop メインループ
+
+
+[-> SceneManager
+activate SceneManager
+
+ /' ----------------------- alt ----------------------------- '/
+alt TitleSceneに切り替わったか
+
+SceneManager -> TitleScene
+activate TitleScene
+
+end
+ /' ---------------------- alt end --------------------------- '/
+
+
+ /' ---------------------- group ---------------------------- '/
+group コンストラクタ
+
+TitleScene -> TitleBackGround : new
+activate TitleBackGround
+TitleScene -> TitleSelectManager : new
+activate TitleSelectManager
+TitleScene -> TitleTimeManager : new
+activate TitleTimeManager
+TitleScene -> TitleName : new
+activate TitleName
+
+end
+ /' --------------------- group end --------------------------- '/
+
+ref over TitleScene, TitleName : 別シーケンスを参照
+
+
+ /' ---------------------- alt -------------------------- '/
+alt TitleScene以外に切り替わったか
+
+SceneManager -> TitleScene
+
+end
+ /' ---------------------- alt end --------------------------- '/
+
+
+/' ---------------------- group --------------------------- '/
+group デストラクタ
+
+
+TitleScene -> TitleBackGround : delete
+destroy TitleBackGround
+TitleScene -> TitleSelectManager : delete
+destroy TitleSelectManager
+TitleScene -> TitleTimeManager : delete
+destroy TitleTimeManager
+TitleScene -> TitleName : delete
+destroy TitleName
+destroy TitleScene
+
+end
+/' ---------------------- group end --------------------------- '/
+
+[<- SceneManager
+deactivate SceneManager
+
+end
+ /' --------------------- loop end ---------------------------- '/
+@enduml

@@ -1,0 +1,86 @@
+@startuml
+class Library
+{
++HWND m_hWnd;
++D3DManager* m_pD3DManager;
++DSoundManager*	m_pDSoundManager;
++XInput*	m_pXInput;
++Texture* m_pTexture;
++Vertex*	m_pVertex;
++UVSetter* m_pUVSetter;
+}
+
+class Scene
+{
++Scene();
++virtual ~Scene();
++virtual SCENE_NUM Control() = 0;
++virtual void Draw() = 0;
++virtual void PadCheck() = 0;
++bool	m_PadState[PAD_MAX];
++bool	m_PadOldState[PAD_MAX];
+}
+
+class SceneManager
+{
++SceneManager(Library* pLibrary);
++~SceneManager();
++bool Control();
++void Draw();
++Scene*		m_pScene;
+}
+
+class TitleBackGround
+{
++TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++~TitleBackGround();
++void Control();
++void Draw();
+}
+
+class TitleName
+{
++TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++~TitleName();
++void Control();
++void Draw();
+}
+
+class TitleScene
+{
++TitleScene(Library* pLibrary);
++~TitleScene();
++virtual SCENE_NUM Control();
++virtual void Draw();
++virtual void PadCheck();
+}
+
+class TitleSelectManager
+{
++TitleSelectManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture, bool*pPadState, bool* pPadOldState);
++~TitleSelectManager();
++TITLESELECT_ID Control();
++void Draw();
+}
+
+class TitleTimeManager
+{
++TitleTimeManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++~TitleTimeManager();
++bool Control();
++void Draw();
+}
+
+Scene              --o  SceneManager
+Library            --o  TitleSelectManager
+Library            --o  TitleScene
+Library            --o  TitleName
+Library            --o  SceneManager
+Library            --o  TitleBackGround
+Library            --o  TitleTimeManager
+TitleBackGround    --*  TitleScene
+TitleSelectManager --*  TitleScene
+TitleName          --*  TitleScene
+TitleTimeManager   --*  TitleScene
+TitleScene         --|> Scene
+@enduml

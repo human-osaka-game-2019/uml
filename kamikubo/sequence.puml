@@ -1,0 +1,68 @@
+@startuml
+participant Library
+participant SceneManager
+participant TitleScene
+participant TitleSelectManager
+participant TitleName
+participant TitleBackGround
+participant TitleTimeManager
+
+activate SceneManager
+[-> SceneManager: Control呼び出し
+
+SceneManager->TitleScene:new
+activate TitleScene
+
+group TitleScene コンストラクタ
+Library<-TitleScene:関数呼び出し
+TitleScene->TitleSelectManager:new
+activate TitleSelectManager
+
+group TitleSelectManager コンストラクタ
+Library<-TitleSelectManager: 関数呼び出し
+end
+
+TitleScene->TitleName:new
+activate TitleName
+TitleScene->TitleBackGround:new
+activate TitleBackGround
+TitleScene->TitleTimeManager:new
+activate TitleTimeManager
+end
+
+SceneManager->TitleScene:Control呼び出し
+TitleScene->TitleTimeManager:Control呼び出し
+TitleScene<--TitleTimeManager:trueかfalseが返る
+
+opt true
+TitleScene<-TitleScene:LOGO_SCENEをm_NextSceneに
+end
+
+opt false
+TitleScene->TitleSelectManager:Control呼び出し
+TitleScene<--TitleSelectManager:選択されたもの
+TitleScene<-TitleScene:選択されたSCENEをm_NextSceneに
+end
+
+SceneManager<--TitleScene:m_NextScene
+SceneManager->TitleScene:delete
+
+group TitleScene デストラクタ
+TitleScene->TitleSelectManager:delete
+deactivate TitleSelectManager
+destroy TitleSelectManager
+TitleScene->TitleName:delete
+deactivate TitleName
+destroy TitleName
+TitleScene->TitleBackGround:delete
+deactivate TitleBackGround
+destroy TitleBackGround
+TitleScene->TitleTimeManager:delete
+deactivate TitleTimeManager
+destroy TitleTimeManager
+Library<-TitleScene:関数呼び出し
+end
+
+deactivate TitleScene
+destroy TitleScene
+@enduml

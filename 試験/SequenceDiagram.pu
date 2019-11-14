@@ -1,0 +1,85 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant TitleBackGround
+participant TitleName
+participant TitleSelectManager
+participant TitleTimeManager
+
+activate SceneManager
+
+loop GameLoop
+
+group Titleの処理
+
+opt  TitleSceneに変わった時
+
+SceneManager -> TitleScene :new
+activate TitleScene
+
+group コンストラクタ
+
+TitleScene -> TitleBackGround :new
+activate TitleBackGround
+
+TitleScene -> TitleName :new
+activate TitleName
+
+TitleScene -> TitleSelectManager:new
+activate TitleSelectManager
+
+TitleScene -> TitleTimeManager:new
+activate TitleTimeManager
+
+end
+
+
+end
+
+SceneManager -> TitleScene :TitleSceneのControl
+
+
+TitleScene -> TitleTimeManager :TitelTimeManagerのControl
+alt 20秒経つ・alpha値がmaxの時
+
+
+TitleScene <-- TitleTimeManager :true
+SceneManager <-- TitleScene :LOGO_SCENE
+
+else 
+
+TitleScene <-- TitleTimeManager :false
+TitleScene --> TitleSelectManager :
+
+end
+
+TitleScene -> TitleSelectManager :TitleSelectManager
+
+
+
+opt :ほかのシーンに変わった時
+
+
+SceneManager -> TitleScene :delete
+group デストラクタ
+
+TitleScene -> TitleBackGround :delete
+deactivate TitleBackGround
+
+TitleScene -> TitleName :delete
+deactivate TitleName
+
+TitleScene -> TitleSelectManager :delete
+deactivate TitleSelectManager
+
+TitleScene -> TitleTimeManager :delete
+deactivate TitleTimeManager
+
+deactivate TitleScene
+
+end
+
+end
+end
+end
+@enduml

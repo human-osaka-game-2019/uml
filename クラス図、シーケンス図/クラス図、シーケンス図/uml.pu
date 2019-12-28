@@ -1,0 +1,135 @@
+﻿@startuml
+class Library
+{
+HWND m_hWnd;
+D3DManager* m_pD3DManager;
+DSoundManager* m_pDSoundManager;
+XInput*	m_pXInput;
+Texture* m_pTexture;
+Vertex* m_pVertex;
+UVSetter* m_pUVSetter;
+}
+
+class Scene
+{
+virtual ~Scene();
+virtual SCENE_NUM Control() = 0;
+virtual void Draw() = 0;
+virtual void PadCheck() = 0;
+bool m_PadState[PAD_MAX];
+bool m_PadOldState[PAD_MAX];
+}
+
+class SceneManager
+{
+void Draw();
+Scene*	m_pScene;
+SceneManager(Library* pLibrary);
+~SceneManager();
+bool Control();	
+}
+
+class TitleBackGround
+{
+TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
+~TitleBackGround();
+void Control();
+void Draw();
+}
+
+class TitleName
+{
+TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
+~TitleName();
+void Control();
+void Draw();
+}
+
+class TitleScene
+{
+TitleScene(Library* pLibrary);
+~TitleScene();
+virtual SCENE_NUM Control();
+virtual void Draw();
+virtual void PadCheck();
+}
+
+class TitleSelectManager
+{
+TitleSelectManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture, bool* pPadState, bool* pPadOldState);
+~TitleSelectManager();
+TITLESELECT_ID Control();
+void Draw();
+}
+
+class TitleTimeManager
+{
+TitleTimeManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
+~TitleTimeManager();
+bool Control();
+void Draw();
+}
+
+Library--o Scene
+Library--o SceneManager
+Library--o TitleBackGround
+Library--o TitleName
+Library--o TitleScene
+Library--o TitleSelectManager
+Library--o TitleTimeManager
+@enduml
+
+http://www.plantuml.com/plantuml/png/dLJHQjim57sklaAFIMXXqASX1kqiinaSBzHA6nZ3gBPOJMKxA7BNCTPldwnULuwKiILlL-TSttjqTF3LJdEb-qQYKlBT3gVrlUBg9_g5Fjzb53V5mrrR4KGlwPAt_BjG2uDjtT5GUTUtrHuB23HiadRRwyMPOLvBWfXurhqIjXjgWcw5qkBPOgybGUlRN6WDOyS3GRyHgCrBqGgZzQasT-0IlrXWDYTlI1x5MLnawoMEkbQhJixc-0D-vngUkhh2LF4V1uaLhw87KJwEv7tNIQF5mBdcMdnTNTDYURtvDcM-I8_q1OCpWswtd23BMPji1G0qp-1X5dWBbVdYPQzZ3YBUBahEt69MQoa-ylBnaneUn-psa731EKvNDBc98tP9MRnXwvluFHwVQzZkJp2OlP0Ji7T1Jqp66s5bG7sI0FZsoDLZRDpXiBt0_pjI1-FqjoY5SeGKfNQf2C4ZlJd7Gn1CC-JK0IwUO62moS0iOMcSnwaPNYJqFprbTJC9jW-TyBZ-Y33VeHwOVN7HmQ_11s3M5FTIx56GKnyCfeTE1kpK8OIkH5lrZVm3
+
+
+
+
+@startuml
+participant Library 
+participant SceneManager 
+participant TitleScene 
+participant TitleSelectManager 
+participant TitleName 
+participant TitleBackGround 
+participant TitleTimeManager 
+
+loop
+
+SceneManager->TitleScene
+activate ->TitleScene
+
+
+group コンストラク
+TitleScene -> Library 
+activate-> Library 
+SceneManager -> TitleScene 
+activate -> TitleScene 
+TitleSelectManager ->TitleName 
+activate->TitleName 
+TitleBackGround ->TitleTimeManager  
+activate->TitleTimeManager 
+
+end
+
+
+group デストラクタ
+TitleScene->TitleBackGround:排除
+deactivate TitleBackGround 
+destroy TitleBackGround 
+TitleScene->TitleName:排除
+deactivate TitleName 
+destroy TitleName 
+TitleScene->TitleSelectManager:排除
+deactivate TitleSelectManager 
+destroy TitleSelectManager 
+TitleScene->TitleTimeManager:排除 
+deactivate TitleTimeManager 
+destroy TitleTimeManager 
+
+destroy TitleScene 
+
+end
+
+end
+
+http://www.plantuml.com/plantuml/png/TL4nJiGm4Epz2d-03r2W4mqDq70VM9pLoS9n8fyFwTgaW8g2Zfw6Yk8gAXvZ2ObVO74AusnCaqWpEpExuzKsKeYxrga-_wsnFVceB-rjeB3NC_36iEShyhJXC6VMDZh-fMiuEpRnVzqrjJNPEPcxYz3jV5CXrxR59ifrNQzKkTx96LPIPAAzfyXwXYgroUwzJiCXZOSqVAJnCOrlQNXNcCeIT37vbDYiaqn0Ydc95wr0YIgGKuAoaqpA8gHIjCI-mT7ZGtbn6ZvnzAH6sEdNq_FtowjgU0fOFb73snYw_O8eVN5FpN7Yu0L8keZ-gdPo2BurJWIWFDZhXJzcu5vX_YY47D_Z-5dbpwvrFm00

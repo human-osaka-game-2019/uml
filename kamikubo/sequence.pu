@@ -7,6 +7,8 @@ participant TitleName
 participant TitleBackGround
 participant TitleTimeManager
 
+loop
+
 activate SceneManager
 [-> SceneManager: Control()
 
@@ -71,5 +73,7 @@ Library<-TitleScene:関数呼び出し
 
 deactivate TitleScene
 destroy TitleScene
+
+end
 
 @enduml

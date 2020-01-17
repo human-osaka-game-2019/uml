@@ -14,7 +14,6 @@ class Library
 abstract class Scene
 {
 +Scene()
-+~Scene() : virtual
 + {abstract} Control() : virtual SCENE_NUM
 + {abstract} Draw() : virtual void 
 + {abstract} PadCheck() : virtual void
@@ -25,7 +24,6 @@ abstract class Scene
 class SceneManager
 {
 +SceneManager(Library* pLibrary)
-+~SceneManager()
 +Control() : bool
 +Draw() : void
 +m_pScene : Scene*
@@ -34,7 +32,6 @@ class SceneManager
 class TitleBackGround
 {
 +TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
-+~TitleBackGround()
 +Control() : void
 +Draw() : void
 }
@@ -42,7 +39,6 @@ class TitleBackGround
 class TitleName
 {
 +TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
-+~TitleName()
 +Control() : void
 +Draw() void
 }
@@ -50,7 +46,6 @@ class TitleName
 class TitleScene
 {
 +TitleScene(Library* pLibrary)
-+~TitleScene()
 +Control() : virtual SCENE_NUM
 +Draw() : virtual void
 +PadCheck() virtual void
@@ -59,7 +54,6 @@ class TitleScene
 class TitleSelectManager
 {
 +TitleSelectManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture, bool*pPadState, bool* pPadOldState)
-+~TitleSelectManager()
 +Control() : TITLESELECT_ID
 +Draw() : void
 }
@@ -67,7 +61,6 @@ class TitleSelectManager
 class TitleTimeManager
 {
 +TitleTimeManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
-+~TitleTimeManager()
 +Control() : bool
 +Draw() : void
 }

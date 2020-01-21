@@ -1,5 +1,4 @@
 ﻿問２
-
 participant "SceneManager"
 participant "TitleScene"
 participant "Library"
@@ -10,28 +9,38 @@ participant "TitleTimeManager"
 
 loop true
 
-alt TitleSceneになったら
+opt TitleSceneになったら
 activate SceneManager
 
-SceneManager -> TitleScene: TitleSceneをnew
+create TitleScene
+SceneManager -> TitleScene:new
 activate TitleScene
 
-group コンストラクタ
+== コンストラクタ ==
+create Library
 TitleScene->Library:new
 activate Library
+
+create TitleBackGround
 TitleScene->TitleBackGround:new
 activate TitleBackGround
+
+create TitleName
 TitleScene->TitleName:new
 activate TitleName
+
+create TitleSelectManager
 TitleScene->TitleSelectManager:new
 activate TitleSelectManager
+
+create TitleTimeManager
 TitleScene->TitleTimeManager:new
 activate TitleTimeManager
 
-end group
+end
 
-SceneManager -> TitleScene: ControlがTitleScene
-TitleScene -> TitleSelectManager: SelectManagerのControlへ
+SceneManager -> TitleScene:Control()
+TitleScene -> TitleSelectManager: SelectManager:Control()
 
 alt シーンが変わっていない
 TitleSelectManager-->TitleScene:TitleScene
@@ -42,7 +51,7 @@ TitleSelectManager-->TitleScene:変わった先のシーン
 TitleScene-->SceneManager:TitleSceneで戻ってきた変わった先のシーン
 SceneManager->TitleScene:delete
 
-group デストラクタ
+== デストラクタ ==
 TitleScene->Library:Release
 TitleScene->TitleBackGround:delete
 deactivate TitleBackGround
@@ -58,9 +67,5 @@ deactivate TitleTimeManager
 destroy TitleTimeManager
 destroy TitleScene
 
-end group
-
-end alt
-end alt
-
-end loop
+end
+end

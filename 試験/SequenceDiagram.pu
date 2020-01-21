@@ -14,39 +14,41 @@ group Titleの処理
 
 opt  TitleSceneに変わった時
 
+create TitleScene
 SceneManager -> TitleScene :new
 activate TitleScene
 
-group コンストラクタ
+== コンストラクタ ==
 
+create TitleBackGround
 TitleScene -> TitleBackGround :new
 activate TitleBackGround
 
+create TitleName
 TitleScene -> TitleName :new
 activate TitleName
 
+create TitleSelectManager
 TitleScene -> TitleSelectManager:new
 activate TitleSelectManager
 
+create TitleTimeManager
 TitleScene -> TitleTimeManager:new
 activate TitleTimeManager
 
 end
 
-
-end
-
-SceneManager -> TitleScene :TitleSceneのControl
+SceneManager -> TitleScene :Control()
 
 
-TitleScene -> TitleTimeManager :TitelTimeManagerのControl
+TitleScene -> TitleTimeManager :Control()
 alt 20秒経つ・alpha値がmaxの時
 
 
 TitleScene <-- TitleTimeManager :true
 SceneManager <-- TitleScene :LOGO_SCENE
 
-else 
+else 20秒経っていない・alpha値がmaxでない時
 
 TitleScene <-- TitleTimeManager :false
 TitleScene --> TitleSelectManager :
@@ -61,7 +63,8 @@ opt :ほかのシーンに変わった時
 
 
 SceneManager -> TitleScene :delete
-group デストラクタ
+
+== デストラクタ ==
 
 TitleScene -> TitleBackGround :delete
 deactivate TitleBackGround
@@ -77,9 +80,11 @@ deactivate TitleTimeManager
 
 deactivate TitleScene
 
+
 end
 
 end
+
 end
-end
+
 @enduml

@@ -1,0 +1,121 @@
+@startuml
+class Library{
+   + Library(hWnd : HWND)
+..
+--
+   + m_hWnd : HWND
+   + m_pD3DManager : D3DManager*
+   + m_pDSoundManager : DSoundManager* 
+   + m_pXInput : XInput*	
+   + m_pTexture : Texture*
+   + m_pVertex : Vertex*
+   + m_pUVSetter : UVSetter* 
+}
+
+abstract class Scene{
+   + Scene()
+..
+    {abstract} + Control() : SCENE_NUM
+    {abstract} + Draw() :  void
+    {abstract} + PadCheck() : void 
+--
+    + m_PadState[PAD_MAX] : bool
+    + m_PadOldState[PAD_MAX] : bool
+}
+
+class SceneManager{
+   + SceneManager(pLibrary : Library*)
+..
+   + Control() : bool
+   + Draw() : void
+--
+   + m_pScene : Scene*
+   - m_NextScene : SCENE_NUM 
+   - m_pLibrary : Library*
+}
+
+class TitleBackGround{
+   + TitleBackGround(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
+..
+   + Control() : void
+   + Draw() : void
+--
+   - m_pLibrary : Library* 
+   - m_pTexture : LPDIRECT3DTEXTURE9 
+   - m_Pos : Position 
+}
+
+class TitleName{
+   + TitleName(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
+..
+   + Control() : void
+   + Draw() : void 
+--
+   - m_pLibrary : Library*
+   - m_pTexture : LPDIRECT3DTEXTURE9 
+   - m_Pos : Position 
+}
+
+class TitleScene{
+   + TitleScene(pLibrary : Library*)
+..
+   + Control() : SCENE_NUM 
+   + Draw() : void 
+   + PadCheck() : void 
+--
+   - m_NextScene : SCENE_NUM 
+   - m_pLibrary : Library* 
+   - m_pTexture : LPDIRECT3DTEXTURE9 
+   - m_pTitleBackGround : TitleBackGround* 
+   - m_pTitleTimeManager : m_TitleSelectManager* 
+   - m_pTitleName : TitleName* 
+   - isTimeOver : bool 
+}
+
+class TitleSelectManger{
+   + TitleSelectManager(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9,pPadState : bool*)
+..
+   + TITLESELECT_ID Control() : 
+   + void Draw() : 
+--
+   - m_Library : Library* 
+   - m_pTexture : LPDIRECT3DTEXTURE9 
+   - m_StartPos : Position 
+   - m_EndPos : Position 
+   - m_CusolPos : Position 
+   - m_PadState : bool* 
+   - m_PadOldState : bool* 
+   - m_alpha : int 
+   - m_isSelectFadeout : bool 
+}
+
+class TitleTimeManager{
+   + TitleTimeManager(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
+..
+   + Control() : bool 
+   + Draw() : void 
+--
+   - m_pLibrary : Library* 
+   - m_pTexture : LPDIRECT3DTEXTURE9
+   - m_Pos : Position 
+   - m_TitleSceneTime : int  
+   - m_alpha : int 
+}
+
+Library --o SceneManager
+Library --o TitleBackGround
+Library --o TitleName
+Library --o TitleScene
+Library --o TitleSelectManger
+Library --o TitleTimeManager
+
+TitleScene --|> Scene
+
+Scene --o SceneManager
+
+TitleScene *-- TitleName
+TitleScene *-- TitleBackGround
+TitleScene *-- TitleSelectManger
+TitleScene *-- TitleTimeManager
+
+@enduml

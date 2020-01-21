@@ -14,9 +14,9 @@ class Library
 abstract class Scene
 {
 +Scene()
-+ {abstract} Control() : virtual SCENE_NUM
-+ {abstract} Draw() : virtual void 
-+ {abstract} PadCheck() : virtual void
++ {abstract} Control() : SCENE_NUM
++ {abstract} Draw() : void 
++ {abstract} PadCheck() : void
 +m_PadState[PAD_MAX] : bool
 +m_PadOldState[PAD_MAX] : bool
 }
@@ -38,17 +38,17 @@ class TitleBackGround
 
 class TitleName
 {
-+TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture);
++TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
 +Control() : void
-+Draw() void
++Draw() : void
 }
 
 class TitleScene
 {
 +TitleScene(Library* pLibrary)
-+Control() : virtual SCENE_NUM
-+Draw() : virtual void
-+PadCheck() virtual void
++Control() : SCENE_NUM
++Draw() : void
++PadCheck() : void
 }
 
 class TitleSelectManager

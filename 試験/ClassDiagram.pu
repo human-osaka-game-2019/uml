@@ -1,6 +1,6 @@
 @startuml
 class Library{
-    Library(hWnd : HWND)
+   + Library(hWnd : HWND)
 ..
 --
    + m_hWnd : HWND
@@ -13,7 +13,7 @@ class Library{
 }
 
 abstract class Scene{
-    Scene()
+   + Scene()
 ..
     {abstract} + Control() : SCENE_NUM
     {abstract} + Draw() :  void
@@ -24,7 +24,7 @@ abstract class Scene{
 }
 
 class SceneManager{
-    SceneManager(pLibrary : Library*)
+   + SceneManager(pLibrary : Library*)
 ..
    + Control() : bool
    + Draw() : void
@@ -35,10 +35,10 @@ class SceneManager{
 }
 
 class TitleBackGround{
-    TitleBackGround(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
+   + TitleBackGround(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
 ..
-    Control() : void
-    Draw() : void
+   + Control() : void
+   + Draw() : void
 --
    - m_pLibrary : Library* 
    - m_pTexture : LPDIRECT3DTEXTURE9 
@@ -46,7 +46,7 @@ class TitleBackGround{
 }
 
 class TitleName{
-    TitleName(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
+   + TitleName(pLibrary : Library*,pTexture : LPDIRECT3DTEXTURE9)
 ..
    + Control() : void
    + Draw() : void 
@@ -57,7 +57,7 @@ class TitleName{
 }
 
 class TitleScene{
-    TitleScene(pLibrary : Library*)
+   + TitleScene(pLibrary : Library*)
 ..
    + Control() : SCENE_NUM 
    + Draw() : void 

@@ -1,13 +1,9 @@
 @startuml
-
 participant SceneManager
 participant TitleScene
-participant TitleSelectManager
-participant TitleName
-participant TitleBackGround
-participant TitleTimeManager
+participant Library
 
-loop
+loop メインループ
 
 activate SceneManager
 [-> SceneManager: Control()
@@ -16,63 +12,9 @@ create TitleScene
 SceneManager->TitleScene:new
 activate TitleScene
 
-== TitleScene コンストラクタ ==
-Library<-TitleScene:関数呼び出し
-
-create TitleSelectManager
-TitleScene->TitleSelectManager:new
-activate TitleSelectManager
-
-Library<-TitleSelectManager: 関数呼び出し
-
-create TitleName
-TitleScene->TitleName:new
-activate TitleName
-
-create TitleBackGround
-TitleScene->TitleBackGround:new
-activate TitleBackGround
-
-create TitleTimeManager
-TitleScene->TitleTimeManager:new
-activate TitleTimeManager
-
-== TitleScene 処理 ==
-
-SceneManager->TitleScene:Control()
-TitleScene->TitleTimeManager:Control()
-TitleScene<--TitleTimeManager:trueかfalseが返る
-
-opt true
-TitleScene<-TitleScene:LOGO_SCENEをm_NextSceneに
-end
-
-opt false
-TitleScene->TitleSelectManager:Control()
-TitleScene<--TitleSelectManager:選択されたもの
-TitleScene<-TitleScene:選択されたSCENEをm_NextSceneに
-end
-
-SceneManager<--TitleScene:m_NextScene
-SceneManager->TitleScene:delete
-
-== TitleScene デストラクタ ==
-TitleScene->TitleSelectManager:delete
-deactivate TitleSelectManager
-destroy TitleSelectManager
-TitleScene->TitleName:delete
-deactivate TitleName
-destroy TitleName
-TitleScene->TitleBackGround:delete
-deactivate TitleBackGround
-destroy TitleBackGround
-TitleScene->TitleTimeManager:delete
-deactivate TitleTimeManager
-destroy TitleTimeManager
-Library<-TitleScene:関数呼び出し
-
-deactivate TitleScene
-destroy TitleScene
+ref over SceneManager, Library : コンストラクタ
+ref over SceneManager, Library : 処理
+ref over SceneManager, Library : デストラクタ
 
 end
 

@@ -1,0 +1,25 @@
+@startuml
+participant "SceneManager"
+participant "TitleScene"
+participant "TitleBackGround"
+participant "TitleName"
+participant "TitleSelectManager"
+participant "TitleTimeManager"
+
+
+SceneManager -> TitleScene : new
+TitleScene -> TitleBackGround : new
+TitleScene -> TitleName: new
+TitleScene -> TitleSelectManager: new
+TitleScene ->TitleTimeManager: new
+
+
+
+
+
+TitleScene <- TitleTimeManager: delete
+TitleScene <- TitleSelectManager: delete
+TitleScene <- TitleName: delete
+TitleScene <- TitleBackGround : delete
+SceneManager <- TitleScene : delete
+@enduml

@@ -1,0 +1,92 @@
+@startuml
+skinparam classAttributeIconSize 0
+class TitleSelectManager {
+ 
+ +TitleSelectManager()
+ +~TitleSelectManager()
+ +TITLESELECT_ID Control()
+ +Draw()
+ 
+}
+
+class Library {
+
++Library()
++~Library()
++HWND m_hWnd
++D3DManager* m_pD3DManager
++D3DManager* m_pDSoundManager
++XInput* m_pXInput
++Texture* m_pTexture
++Vertex* m_pVertex;
++UVSettter* m_pUVSetter
+
+}
+
+class Scene
+{
++Scene()
++virtual ~Scene()
++virtual SCENE_NUM Contlol() = 0
++virtual Draw() = 0
++virtual PadCheck() = 0
++m_PadState[PAD_MAX]
++m_PadOldState[PAD_MAX];
+}
+
+class TitleBackGround {
+
++TitleBackGround()
++~TitlebackGround()
++Control()
++Drae()
+
+}
+
+class TitleName {
+
++TitleName()
++~TitleName()
++Control()
++Draw
+
+}
+
+class TitleScene{
++TitleScene()
++~TitleScene()
++virtual SCENE_NUM Control()
++virtual Draw()
++virtual PadCheck()
+}
+
+class SceneManager
+{
++SceneManager()
++~SceneManager()
++Control()
++Draw()
+Scene* m_pScene
+}
+
+class TitleTimeManager{
+
++TitleTimeManager()
++~TitleTimeManager()
++Control
++Draw()
+
+}
+Scene              --o  SceneManager
+Library            --o  TitleSelectManager
+Library            --o  TitleScene
+Library            --o  TitleName
+Library            --o  SceneManager
+Library            --o  TitleBackGround
+Library            --o  TitleTimeManager
+TitleBackGround    --*  TitleScene
+TitleSelectManager --*  TitleScene
+TitleName          --*  TitleScene
+TitleTimeManager   --*  TitleScene
+TitleScene         --|> Scene
+@enduml

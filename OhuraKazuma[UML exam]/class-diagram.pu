@@ -1,0 +1,74 @@
+@startuml class-diagram
+
+class Library{
+    +Library()
+    +~Library()
+    +m_hWnd
+    +m_pD3DManager
+    +m_pDSoundManager
+    +m_pXInput
+    +m_pTexture
+    +m_pVertex
+    +m_pUVSetter
+}
+abstract Scene{
+    +Scene()
+    +virtual ~Scene() = 0
+    +virtual SCENE_NUM Control() = 0
+    +virtual Draw() = 0
+    +virtual PadCheck() = 0
+    +m_PadState[PAD_MAX]
+    +m_PadOldState[PAD_MAX]
+}
+class SceneManager{
+    +SceneManager(Library* pLibrary)
+    +~SceneManager()
+    +Control()
+    +Draw()
+    +Scene* m_pScene
+}
+class TitleScene{
+    +TitleScene(Library* pLibrary)
+    +~TitleScene()
+    +virtual Control()
+    +virtual Draw()
+    +virtual PadCheck()
+}
+class TitleName{
+    +TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
+    +~TitleName()
+    +Control()
+    +Draw()
+}
+class TitleSelectManager{
+    +TitleSelectManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
+    +~TitleSelectManager()
+    +Control()
+    +Draw()
+}
+class TitleTimeManager{
+    +TitleTimeManager(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
+    +~TitleTimeManager()
+    +Control()
+    +Draw()
+}
+class TitleBackGroundManager{
+    +TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE pTexture)
+    +~TitleBackGround()
+    +Control()
+    +Draw()
+}
+
+Scene <.. TitleScene
+TitleScene *-- TitleName
+TitleScene *-- TitleTimeManager
+TitleScene *-- TitleBackGroundManager
+TitleScene *-- TitleSelectManager
+Library o-- SceneManager
+Library o-- TitleScene
+Library o-- TitleName
+Library o-- TitleSelectManager
+Library o-- TitleTimeManager
+Library o-- TitleBackGroundManager
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant TitleSelectManager
+participant TitleName
+participant TitleBackGround
+participant TitleTimeManager
+
+Title コンストラクタ
+
+activate SceneManager
+activate TitleScene
+
+TitleScene->Library:関数呼び出し、csv・pngファイル読み込み
+
+create TitleSelectManager
+TitleScene->TitleSelectManager:new
+activate TitleSelectManager
+
+TitleSelectManager->TitleSelectManager:カーソルの初期値を設定
+TitleSelectManager->Library:関数呼び出し、uv座標を設定
+
+create TitleName
+TitleScene->TitleName:new
+activate TitleName
+TitleName->TitleName:座標を初期設定
+
+create TitleBackGround
+TitleScene->TitleBackGround:new
+activate TitleBackGround
+TitleBackGround->TitleBackGround:座標を設定
+
+create TitleTimeManager
+TitleScene->TitleTimeManager:new
+activate TitleTimeManager
+TitleTimeManager->TitleTimeManager:座標、大きさをを設定
+
+@enduml

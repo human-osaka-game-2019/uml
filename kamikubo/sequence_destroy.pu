@@ -1,0 +1,36 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant TitleSelectManager
+participant TitleName
+participant TitleBackGround
+participant TitleTimeManager
+
+activate SceneManager
+activate TitleScene
+activate TitleSelectManager
+activate TitleName
+activate TitleBackGround
+activate TitleTimeManager
+
+title デストラクタ
+
+TitleScene->TitleSelectManager:delete
+deactivate TitleSelectManager
+destroy TitleSelectManager
+TitleScene->TitleName:delete
+deactivate TitleName
+destroy TitleName
+TitleScene->TitleBackGround:delete
+deactivate TitleBackGround
+destroy TitleBackGround
+TitleScene->TitleTimeManager:delete
+deactivate TitleTimeManager
+destroy TitleTimeManager
+TitleScene->Library:m_pTextureをRelease
+TitleScene->Library:頂点、アニメーション、ファイル情報をRelease
+
+deactivate TitleScene
+destroy TitleScene
+
+@enduml

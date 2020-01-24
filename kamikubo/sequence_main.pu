@@ -1,0 +1,41 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant TitleSelectManager
+participant TitleName
+participant TitleBackGround
+participant TitleTimeManager
+participant Library
+
+activate SceneManager
+activate TitleScene
+activate TitleSelectManager
+activate TitleName
+activate TitleBackGround
+activate TitleTimeManager
+
+Title 処理
+
+SceneManager->TitleScene:Control()
+TitleScene->TitleTimeManager:Control()
+TitleTimeManager-->TitleScene:alpha値が最大になりフェードアウトしきった時trueが返る
+
+alt 20秒経っていない時、alpha値が最大の時
+TitleScene->TitleScene:LOGO_SCENEをm_NextSceneに
+else alpha値が最大より少ない時
+TitleScene->TitleSelectManager:Control()
+
+alt ボタンが押された時
+TitleSelectManager-->TitleScene:選択されたSCENE
+else 押されなかった時
+TitleSelectManager-->TitleScene:TitleSelectNone
+end
+
+TitleScene->TitleScene:選択されたSCENEをm_NextSceneに
+end
+
+TitleScene-->SceneManager:m_NextScene
+
+SceneManager->TitleScene:delete
+
+@enduml

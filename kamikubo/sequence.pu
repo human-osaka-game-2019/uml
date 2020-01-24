@@ -1,0 +1,21 @@
+@startuml
+participant SceneManager
+participant TitleScene
+participant Library
+
+loop メインループ
+
+activate SceneManager
+[-> SceneManager: Control()
+
+create TitleScene
+SceneManager->TitleScene:new
+activate TitleScene
+
+ref over SceneManager, Library : コンストラクタ
+ref over SceneManager, Library : 処理
+ref over SceneManager, Library : デストラクタ
+
+end
+
+@enduml

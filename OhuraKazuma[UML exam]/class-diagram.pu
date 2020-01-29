@@ -13,10 +13,10 @@ class Library{
 }
 abstract Scene{
     +Scene()
-    +virtual ~Scene() = 0
-    +virtual SCENE_NUM Control() = 0
-    +virtual Draw() = 0
-    +virtual PadCheck() = 0
+    +virtual ~Scene()
+    +virtual Control()
+    +virtual Draw()
+    +virtual PadCheck()
     +m_PadState[PAD_MAX]
     +m_PadOldState[PAD_MAX]
 }

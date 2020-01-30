@@ -1,0 +1,12 @@
+@startuml
+title TitleSceneのデストラクタ
+
+TitleScene -> TitleBackGround : delete
+destroy TitleBackGround
+TitleScene -> TitleSelectManager : delete
+destroy TitleSelectManager
+TitleScene -> TitleTimeManager : delete
+destroy TitleTimeManager
+TitleScene -> TitleName : delete
+destroy TitleName
+@enduml

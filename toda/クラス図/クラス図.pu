@@ -1,0 +1,126 @@
+@startuml
+class Library
+{
++ Library(HWND hWnd)
++ m_hWnd:HWND
++ m_pD3DManager:D3DManager*
++ m_pDSoundManager:DSoundManager*
++ m_pXInput:XInput*
++ m_pTexture:Texture*
++ m_pVertex:Vertex*
++ m_pUVSetter:UVSetter*
+
+}
+
+abstract class Scene
+{
+ + Scene()
+ + {abstract} Control():SCENE_NUM
+ + {abstract} Draw():void
+ + {abstract} PadCheck():void
+ + m_PadState[PAD_MAX]:bool
+ + m_PadOldState[PAD_MAX]:bool
+}
+
+class SceneManager
+{
+ + SceneManager(Library* pLibrary)
+ + Control():bool 
+ + Draw():void 
+ + m_pScene:Scene*		
+}
+
+class TitleBackGround
+{
+ + TitleBackGround(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
+ + Control():void 
+ + Draw():void 
+}
+
+class TitleName
+{
+ + TitleName(Library* pLibrary, LPDIRECT3DTEXTURE9 pTexture)
+ + Control():void
+ + Draw():void
+@startuml
+class Library
+{
++ Library(HWND hWnd)
++ m_hWnd : HWND
++ m_pD3DManager : D3DManager*
++ m_pDSoundManager : DSoundManager*
++ m_pXInput : XInput*
++ m_pTexture : Texture*
++ m_pVertex : Vertex*
++ m_pUVSetter : UVSetter*
+
+}
+
+abstract class Scene
+{
+ + Scene()
+ + {abstract} Control() : SCENE_NUM
+ + {abstract} Draw() : void
+ + {abstract} PadCheck() : void
+ + m_PadState[PAD_MAX] : bool
+ + m_PadOldState[PAD_MAX] : bool
+}
+
+class SceneManager
+{
+ + SceneManager(pLibrary : Library*)
+ + Control() : bool 
+ + Draw() : void 
+ + m_pScene : Scene*		
+}
+
+class TitleBackGround
+{
+ + TitleBackGround(pLibrary : Library*, pTexture : LPDIRECT3DTEXTURE9)
+ + Control() : void 
+ + Draw() : void 
+}
+
+class TitleName
+{
+ + TitleName(pLibrary : Library*, pTexture : LPDIRECT3DTEXTURE9)
+ + Control() : void
+ + Draw() : void
+}
+
+class TitleScene
+{
+ + TitleScene(pLibrary : Library*);
+ + Control() : SCENE_NUM 
+ + Draw() : void 
+ + PadCheck() : void 
+}
+
+class TitleSelectManager
+{
+ + TitleSelectManager(pLibrary : Library*, pTexture : LPDIRECT3DTEXTURE9, pPadState : bool*, pPadOldState : bool*)
+ + Control() : TITLESELECT_ID
+ + Draw() : void 
+}
+
+class TitleTimeManager
+{
+ + TitleTimeManager( pLibrary : Library* , pTexture : LPDIRECT3DTEXTURE9)
+ + Control() : bool 
+ + Draw() : void 
+}
+
+Scene <|-- TitleScene
+TitleScene o-- TitleTimeManager
+TitleScene o-- TitleName
+TitleScene o-- TitleSelectManager
+TitleScene o-- TitleBackGround
+
+TitleTimeManager o-- Library
+TitleName o-- Library
+TitleSelectManager o-- Library
+TitleBackGround o-- Library
+
+SceneManager o-- Library
+SceneManager o-- Scene
+@enduml

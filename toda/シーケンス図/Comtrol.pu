@@ -1,0 +1,53 @@
+﻿@startuml
+title TitleSceneのComtrol
+
+participant TitleScene
+participant TitleSelectManager
+participant TitleTimeManager
+
+activate TitleScene
+activate TitleSelectManager
+activate TitleTimeManager
+
+
+alt 条件
+
+TitleScene -> TitleTimeManager : Control関数を呼ぶ
+TitleTimeManager -> TitleScene : true or false
+activate TitleScene
+
+else true
+
+TitleScene -> TitleScene : m_NextSceneにLOGO_SCENEを代入
+
+
+else false
+
+alt 条件
+
+TitleScene -> TitleSelectManager : Contorl関数を呼ぶ
+TitleSelectManager -> TitleScene : 状態
+activate TitleScene
+
+else GAME_START
+TitleScene -> TitleScene : m_NextSceneにGAME_SCENEを代入
+
+else GAME_END
+TitleScene -> TitleScene : m_NextSceneにEND_SCENEを代入
+
+else GAME_STAFF
+TitleScene -> TitleScene : m_NextSceneにSTAFF_SCENEを代入
+
+else TITLESCELECT_NONE
+TitleScene -> TitleScene : m_NextSceneにSCENE_NONEを代入
+
+
+end
+deactivate TitleScene
+
+end
+activate TitleScene
+
+
+deactivate TitleScene
+@enduml

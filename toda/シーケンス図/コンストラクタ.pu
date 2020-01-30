@@ -1,0 +1,12 @@
+@startuml
+title TitleSceneのコンストラクタ
+
+create TitleBackGround order 1
+TitleScene -> TitleBackGround : new
+create TitleSelectManager order 2
+TitleScene -> TitleSelectManager : new
+create TitleTimeManager order 3
+TitleScene -> TitleTimeManager : new
+create TitleName order 4
+TitleScene -> TitleName : new
+@enduml

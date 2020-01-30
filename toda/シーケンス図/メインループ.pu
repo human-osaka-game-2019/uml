@@ -1,4 +1,6 @@
 ﻿@startuml
+title メインループ
+
 participant SceneManager
 participant TitleScene
 participant TitleBackGround
@@ -17,7 +19,7 @@ activate SceneManager
 alt TitleSceneに切り替わったか
 
 create TitleScene
-SceneManager -> TitleScene
+SceneManager -> TitleScene : new
 activate TitleScene
 
 end
@@ -25,43 +27,24 @@ end
 
 
  
-== コンストラクタ ==
-
-create TitleBackGround
-TitleScene -> TitleBackGround : new
-create TitleSelectManager
-TitleScene -> TitleSelectManager : new
-create TitleTimeManager
-TitleScene -> TitleTimeManager : new
-create TitleName
-TitleScene -> TitleName : new
+ref over TitleScene, TitleName : TitleSceneのコンストラクタのシーケンスを参照
 
 
 
 
-ref over TitleScene, TitleName : 別シーケンスを参照
+ref over TitleScene, TitleName : TitleSceneのControlのシーケンスを参照
 
 
  /' ---------------------- alt -------------------------- '/
 alt TitleScene以外に切り替わったか
 
-SceneManager -> TitleScene
+SceneManager -> TitleScene : delete
 
 end
  /' ---------------------- alt end --------------------------- '/
 
+ref over TitleScene, TitleName : TitleSceneのデストラクタのシーケンスを参照
 
-== デストラクタ ==
-
-
-TitleScene -> TitleBackGround : delete
-destroy TitleBackGround
-TitleScene -> TitleSelectManager : delete
-destroy TitleSelectManager
-TitleScene -> TitleTimeManager : delete
-destroy TitleTimeManager
-TitleScene -> TitleName : delete
-destroy TitleName
 destroy TitleScene
 
 

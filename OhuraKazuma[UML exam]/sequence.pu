@@ -1,0 +1,55 @@
+@startuml
+
+participant SceneManager
+participant TitleScene
+participant TitleBackGround
+participant TitleName
+participant TitleSelectManager
+participant TitleTimeManager
+
+activate SceneManager
+
+opt SceneにTitleが入ったら
+create TitleScene
+SceneManager -> TitleScene:new
+activate TitleScene
+create TitleBackGround
+TitleScene -> TitleBackGround:new
+activate TitleBackGround
+create TitleName
+TitleScene -> TitleName:new
+activate TitleName
+create TitleSelectManager
+TitleScene -> TitleSelectManager:new
+activate TitleSelectManager
+create TitleTimeManager
+TitleScene -> TitleTimeManager:new
+activate TitleTimeManager
+end
+
+loop GameLoop
+TitleScene -> TitleBackGround:Draw()
+TitleScene -> TitleName:Draw()
+TitleScene -> TitleSelectManager:Draw()
+TitleScene -> TitleTimeManager:Draw()
+
+alt シーンが変わったら
+TitleScene -> TitleTimeManager:delete
+destroy TitleTimeManager
+deactivate TitleTimeManager
+TitleScene -> TitleSelectManager:delete
+destroy TitleSelectManager
+deactivate TitleSelectManager
+TitleScene -> TitleName:delete
+destroy TitleName
+deactivate TitleName
+TitleScene -> TitleBackGround:delete
+destroy TitleBackGround
+deactivate TitleBackGround
+TitleScene -> TitleScene:delete
+destroy TitleScene
+deactivate TitleScene
+end 
+end
+@enduml
+
